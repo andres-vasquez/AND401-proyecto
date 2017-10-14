@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/productoImageView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2"
+        android:adjustViewBounds="true"
+        android:src="@mipmap/ic_launcher" />
+
+    <LinearLayout
+        android:id="@+id/productoLinearLayout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.8"
+        android:paddingStart="20dp"
+        android:paddingLeft="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/nombreTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            tools:text="Nombre producto"/>
+
+        <TextView
+            android:id="@+id/precioTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/colorAccent"
+            android:gravity="right|bottom"
+            android:textSize="20sp"
+            tools:text="20.00$us"/>
+
+    </LinearLayout>
+</LinearLayout>

@@ -16,8 +16,8 @@
         android:textStyle="bold"
         android:gravity="center"/>
 
-    <ListView
-        android:id="@+id/listaListView"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/listaRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>
