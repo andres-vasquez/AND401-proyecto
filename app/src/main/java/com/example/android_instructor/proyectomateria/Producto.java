@@ -20,6 +20,13 @@ public class Producto {
     private int stock;
     private Date fechaElaboracion;
 
+    public Producto(int id, int imagen, String nombre, double precio) {
+        this.id = id;
+        this.imagen = imagen;
+        this.nombre = nombre;
+        this.precio = precio;
+    }
+
     public int getId() {
         return id;
     }
