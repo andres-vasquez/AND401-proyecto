@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -16,10 +17,12 @@ public class MainActivity extends AppCompatActivity {
     private static final String LOG = MainActivity.class.getSimpleName();
 
     private Context context;
+    private ListaListViewAdapter adapter;
 
     private ListView listaListView;
 
     private List<Producto> listaProductos;
+    private int id =5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +39,37 @@ public class MainActivity extends AppCompatActivity {
         listaProductos.add(new Producto(3,R.drawable.chocolate,"Chocolate",10));
         listaProductos.add(new Producto(4,R.drawable.cocacola,"Coca Cola",11.5));
 
-        ListaListViewAdapter adapter = new ListaListViewAdapter(context,listaProductos);
+        adapter = new ListaListViewAdapter(context,listaProductos);
         listaListView.setAdapter(adapter);
 
         listaListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Producto producto = listaProductos.get(position);
+                producto.setPrecio(9.99);
+                adapter.notifyDataSetChanged();
+
                 Toast.makeText(context,producto.getNombre(),Toast.LENGTH_SHORT).show();
             }
         });
+
+        //Agregar boton
+        Button agregarButton = new Button(context);
+        agregarButton.setText("+ Agregar");
+        agregarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                agregarProducto();
+            }
+        });
+
+        listaListView.addHeaderView(agregarButton);
+    }
+
+    private void agregarProducto(){
+        Producto producto = new Producto(5,R.mipmap.ic_launcher,"Dinamico"+id,10*id);
+        listaProductos.add(producto);
+        adapter.notifyDataSetChanged();
+        id++;
     }
 }

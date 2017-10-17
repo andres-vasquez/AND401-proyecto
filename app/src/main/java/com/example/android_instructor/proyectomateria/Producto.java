@@ -6,6 +6,7 @@ import java.util.Date;
  * Created by Android-Instructor on 13/10/2017.
  */
 
+//TODO Paso 1. Creat el producto
 public class Producto {
 
     private int id;

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- TODO paso 2: Crear el layout-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -10,7 +11,7 @@
         android:id="@+id/productoImageView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.2"
+        android:layout_weight="0.3"
         android:adjustViewBounds="true"
         android:src="@mipmap/ic_launcher" />
 
@@ -18,7 +19,7 @@
         android:id="@+id/productoLinearLayout"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.8"
+        android:layout_weight="0.7"
         android:paddingStart="20dp"
         android:paddingLeft="20dp"
         android:orientation="vertical">
