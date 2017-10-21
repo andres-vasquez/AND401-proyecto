@@ -72,4 +72,17 @@ public class MainActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
         id++;
     }
+
+    private void iniciarAcciones(){
+        //Todo iniciar acciones
+    }
+
+    private void iniciarSesion(){
+        //Todo iniciar sesion
+    }
+
+    private void cerrarSesion() {
+        //Todo cerrar sesion
+
+    }
 }

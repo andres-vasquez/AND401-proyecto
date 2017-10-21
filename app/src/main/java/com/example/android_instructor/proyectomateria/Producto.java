@@ -13,6 +13,7 @@ public class Producto {
 
     //TODO cambiar a String u otro la imagen
     private int imagen; // Resource
+    private String imagenPath;
     private String nombre;
     private double precio;
 
@@ -90,5 +91,13 @@ public class Producto {
 
     public void setFechaElaboracion(Date fechaElaboracion) {
         this.fechaElaboracion = fechaElaboracion;
+    }
+
+    public String getImagenPath() {
+        return imagenPath;
+    }
+
+    public void setImagenPath(String imagenPath) {
+        this.imagenPath = imagenPath;
     }
 }
