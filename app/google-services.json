@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "826587348462",
+    "firebase_url": "https://fitgrill-79b2b.firebaseio.com",
+    "project_id": "fitgrill-79b2b",
+    "storage_bucket": "fitgrill-79b2b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:826587348462:android:15935ae819d8e1c4",
+        "android_client_info": {
+          "package_name": "com.example.android_instructor.proyectomateria"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "826587348462-l3rt9ca23mgpevjdkptmo9mii7v2pv28.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.android_instructor.proyectomateria",
+            "certificate_hash": "9bf6edbda3817eb1aef3509f54b8f2ed9cb5a16e"
+          }
+        },
+        {
+          "client_id": "826587348462-kqe4t08b5rtuvg357m6bnfce3tcakn1a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9qRge_0BRePiZHOP6lq6E1Nw4_kbNZmw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "826587348462-kqe4t08b5rtuvg357m6bnfce3tcakn1a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

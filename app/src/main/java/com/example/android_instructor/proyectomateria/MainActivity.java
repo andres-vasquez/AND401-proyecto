@@ -64,17 +64,29 @@ public class MainActivity extends AppCompatActivity {
         });
 
         listaListView.addHeaderView(agregarButton);
+        iniciarAcciones();
     }
 
     private void agregarProducto(){
         Producto producto = new Producto(5,R.mipmap.ic_launcher,"Dinamico"+id,10*id);
-        listaProductos.add(producto);
-        adapter.notifyDataSetChanged();
+
+        FirebaseController.enviarProductos(producto);
+
+        //listaProductos.add(producto);
+        //adapter.notifyDataSetChanged();
         id++;
     }
 
     private void iniciarAcciones(){
         //Todo iniciar acciones
+        new FirebaseController(new FirebaseController.DataChanges() {
+            @Override
+            public void onDataChanged(List<Producto> lstProductosRecibidos){
+                listaProductos.clear();
+                listaProductos.addAll(lstProductosRecibidos);
+                adapter.notifyDataSetChanged();
+            }
+        }).recibidProductos();
     }
 
     private void iniciarSesion(){
