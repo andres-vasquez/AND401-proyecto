@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -90,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
             solicitarlogin();
         } else {
             iniciarAcciones();
+            mostrarDatosUsuario();
         }
     }
 
@@ -101,8 +103,8 @@ public class MainActivity extends AppCompatActivity {
                         .setAvailableProviders(
                                 Arrays.asList(new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
                                         new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),
-                                        new AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build()
-                                        //new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build(),
+                                        new AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build(),
+                                        new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build()
                                         //new AuthUI.IdpConfig.Builder(AuthUI.TWITTER_PROVIDER).build()))
                                 )).build(),
                 RC_SIGN_IN);
@@ -116,8 +118,21 @@ public class MainActivity extends AppCompatActivity {
             firebaseAuth = FirebaseAuth.getInstance();
             if(firebaseAuth.getCurrentUser()!=null){
                 iniciarAcciones();
+                mostrarDatosUsuario();
             }
         }
+    }
+
+    private void mostrarDatosUsuario(){
+        Toast.makeText(context,
+                "Bienvenid@: "+firebaseAuth.getCurrentUser().getDisplayName()
+                ,Toast.LENGTH_LONG).show();
+
+        String email=firebaseAuth.getCurrentUser().getEmail();
+        String photoUrl = firebaseAuth.getCurrentUser().getPhotoUrl().toString();
+
+        Log.e("EMAIL",email);
+        Log.e("PHOTO",""+photoUrl);
     }
 
     private void agregarProducto(){

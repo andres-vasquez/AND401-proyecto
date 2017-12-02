@@ -2,4 +2,7 @@
     <string name="app_name">ProyectoMateria</string>
 
     <string name="titulo">Lista de productos</string>
+    <string name="facebook_app_id">107737430012915</string>
+    <string name="fb_login_protocol_scheme">fb107737430012915</string>
+
 </resources>
