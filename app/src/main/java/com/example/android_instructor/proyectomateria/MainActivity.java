@@ -1,6 +1,7 @@
 package com.example.android_instructor.proyectomateria;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +10,11 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,10 +24,14 @@ public class MainActivity extends AppCompatActivity {
     private Context context;
     private ListaListViewAdapter adapter;
 
+    private Button btnLogout;
     private ListView listaListView;
 
     private List<Producto> listaProductos;
     private int id =5;
+
+    private static final int RC_SIGN_IN = 101;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         context=this;
         listaListView = (ListView)findViewById(R.id.listaListView);
+        btnLogout = (Button)findViewById(R.id.btnLogout);
 
         //inicializa la lista
         listaProductos = new ArrayList<>();
@@ -64,7 +74,50 @@ public class MainActivity extends AppCompatActivity {
         });
 
         listaListView.addHeaderView(agregarButton);
-        iniciarAcciones();
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(firebaseAuth.getCurrentUser()!=null){
+                    firebaseAuth.signOut();
+                }
+            }
+        });
+
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        if(firebaseAuth.getCurrentUser()==null){
+            solicitarlogin();
+        } else {
+            iniciarAcciones();
+        }
+    }
+
+    private void solicitarlogin(){
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setLogo(R.drawable.chocolate)
+                        .setAvailableProviders(
+                                Arrays.asList(new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
+                                        new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),
+                                        new AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build()
+                                        //new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build(),
+                                        //new AuthUI.IdpConfig.Builder(AuthUI.TWITTER_PROVIDER).build()))
+                                )).build(),
+                RC_SIGN_IN);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == RC_SIGN_IN){
+            firebaseAuth = FirebaseAuth.getInstance();
+            if(firebaseAuth.getCurrentUser()!=null){
+                iniciarAcciones();
+            }
+        }
     }
 
     private void agregarProducto(){
