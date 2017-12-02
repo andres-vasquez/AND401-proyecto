@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -14,7 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainRecyclerActivity extends AppCompatActivity {
@@ -28,6 +33,10 @@ public class MainRecyclerActivity extends AppCompatActivity {
 
     private List<Producto> listaProductos;
     private int id =5;
+
+    private static final int RC_SIGN_IN = 101;
+    private FirebaseAuth firebaseAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +88,13 @@ public class MainRecyclerActivity extends AppCompatActivity {
         });
 
         //listaRecyclerView.addHeaderView(agregarButton);
+        firebaseAuth = FirebaseAuth.getInstance();
+        if(firebaseAuth.getCurrentUser()==null){
+            solicitarlogin();
+        } else {
+            iniciarAcciones();
+            mostrarDatosUsuario();
+        }
     }
 
     private void agregarProducto(){
@@ -86,5 +102,57 @@ public class MainRecyclerActivity extends AppCompatActivity {
         listaProductos.add(producto);
         adapter.notifyDataSetChanged();
         id++;
+    }
+
+    private void solicitarlogin(){
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setLogo(R.drawable.chocolate)
+                        .setAvailableProviders(
+                                Arrays.asList(new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
+                                        new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),
+                                        new AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build()
+                                        //new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build()
+                                        //new AuthUI.IdpConfig.Builder(AuthUI.TWITTER_PROVIDER).build()))
+                                )).build(),
+                RC_SIGN_IN);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == RC_SIGN_IN){
+            firebaseAuth = FirebaseAuth.getInstance();
+            if(firebaseAuth.getCurrentUser()!=null){
+                iniciarAcciones();
+                mostrarDatosUsuario();
+            }
+        }
+    }
+
+    private void mostrarDatosUsuario(){
+        Toast.makeText(context,
+                "Bienvenid@: "+firebaseAuth.getCurrentUser().getDisplayName()
+                ,Toast.LENGTH_LONG).show();
+
+        String email=firebaseAuth.getCurrentUser().getEmail();
+        String photoUrl = firebaseAuth.getCurrentUser().getPhotoUrl().toString();
+
+        Log.e("EMAIL",email);
+        Log.e("PHOTO",""+photoUrl);
+    }
+
+    private void iniciarAcciones(){
+        //Todo iniciar acciones
+        new FirebaseController(new FirebaseController.DataChanges() {
+            @Override
+            public void onDataChanged(List<Producto> lstProductosRecibidos){
+                listaProductos.clear();
+                listaProductos.addAll(lstProductosRecibidos);
+                adapter.notifyDataSetChanged();
+            }
+        }).recibidProductos();
     }
 }
