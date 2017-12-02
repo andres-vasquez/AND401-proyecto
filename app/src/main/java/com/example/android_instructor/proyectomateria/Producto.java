@@ -22,6 +22,10 @@ public class Producto {
     private int stock;
     private Date fechaElaboracion;
 
+    public Producto() {
+    }
+
+
     public Producto(int id, int imagen, String nombre, double precio) {
         this.id = id;
         this.imagen = imagen;
