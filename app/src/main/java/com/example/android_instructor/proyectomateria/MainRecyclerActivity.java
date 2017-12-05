@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -145,6 +147,10 @@ public class MainRecyclerActivity extends AppCompatActivity {
     }
 
     private void iniciarAcciones(){
+        String token= FirebaseInstanceId.getInstance().getToken();
+        FirebaseMessaging.getInstance().subscribeToTopic("tekhne");
+        Log.e("Token",token);
+
         //Todo iniciar acciones
         new FirebaseController(new FirebaseController.DataChanges() {
             @Override
